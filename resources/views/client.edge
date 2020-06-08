@@ -1,0 +1,69 @@
+@layout('layouts.main')
+@section('title')
+    Game Request
+@endsection
+
+@section('style')
+    {{ style('client') }}
+@endsection
+
+@section('body')
+    <div class="container">
+    <div class="row" style="margin-top: 15%;">
+      <div class="col-sm-4">
+        <img src="wolf.png"  class="rounded img-fluid"alt="" srcset="">
+      </div>
+      <div class="col-sm-8">
+      <form action="{{route('ClienttController.store')}}" method="POST" >
+        {{ csrfField() }}
+          <div class="form-group">
+            <label for="name" style="float: right" >نام شما:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder=" آیدی یا نام  شما در اپارات"
+              name="name"
+              autofocus=1
+              value="{{old('name','')}}"
+            />
+            @if(hasErrorFor('name'))
+             <span>
+               {{getErrorFor('name')}}
+              </span> 
+            @endif
+          </div>
+          <div class="form-group">
+            <label for="gameId">آی دی برای درخواست بازی:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="id"
+              placeholder="نام یا آیدی شما در بازی "
+              name="gameId"
+              value="{{old('gameId','')}}"
+              autofocus=2
+            />
+            @if(hasErrorFor('gameId'))
+            <span>
+              {{getErrorFor('gameId')}}
+             </span> 
+           @endif
+          </div>
+          @if(canSend)
+           <button type="submit" class="btn btn-primary" onclick="send()" >بفرست</button>
+          @endif
+        </form>
+      </div>
+      
+    </div>
+    @if(data)
+    {{data}} نوبت شما در صف
+    @endif
+  </div>
+@endsection
+
+@section('script')
+    {{ script('validtion') }}
+    {{ script('client') }}
+@endsection
